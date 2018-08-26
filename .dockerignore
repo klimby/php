@@ -1,5 +1,8 @@
 .gitignore
 /.idea
 .env
-Dockerfile.other
-Dockerfile-old
+*.tar
+/.git
+build.sh
+enter.sh
+*.yml

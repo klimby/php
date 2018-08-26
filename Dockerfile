@@ -1,10 +1,6 @@
-# PHP config
-#
-# VERSION               0.1.0
-
 FROM php:7.1.20-fpm-alpine3.7
-LABEL e-php-alpine.description="PHP-FPM v7.1.20-fpm-alpine3.7"
-LABEL e-php-alpine.version="0.1.0"
+LABEL e-php.description="PHP-FPM v7.1.20-fpm-alpine3.7"
+LABEL e-php.version="0.1.0"
 
 # Install dependencies
 RUN apk --no-cache --update add \

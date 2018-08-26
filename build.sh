@@ -1,19 +1,17 @@
 #!/bin/bash -l
 #$ -S /bin/bash
-echo $1
+
 if [[ $1 ]]
 then
-    docker build -t klimby/e-php-alpine:$1 -t klimby/e-php-alpine:latest .
-    docker push klimby/e-php-alpine:$1
-    docker push klimby/e-php-alpine:latest
-    docker save klimby/e-php-alpine:$1 klimby/e-php-alpine:latest > e-php-alpine.$1.tar
-    ls -sh e-php-alpine.$1.tar
+    docker build -t klimby/e-php:$1 -t klimby/e-php:latest .
+    docker push klimby/e-php:$1
+    docker push klimby/e-php:latest
+    rm *.tar
+    docker save klimby/e-php:$1 klimby/e-php:latest > e-php.$1.tar
+    ls -sh e-php.$1.tar
+    git tag -a $1 -m "version $1"
 else
-    docker build -t klimby/e-php-alpine:latest .
-    docker push klimby/e-php-alpine:latest
-    docker save klimby/e-php-alpine:latest > e-php-alpine.latest.tar
-    ls -sh e-php-alpine.latest.tar
-
+     echo -e "\033[31m Отсутствует номер версии \033[0m"
 fi
 
 
