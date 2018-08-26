@@ -1,18 +1,27 @@
 #!/bin/bash -l
 #$ -S /bin/bash
 
-if [[ $1 ]]
-then
-    docker build -t klimby/e-php:$1 -t klimby/e-php:latest .
-    docker push klimby/e-php:$1
-    docker push klimby/e-php:latest
-    rm *.tar
-    docker save klimby/e-php:$1 klimby/e-php:latest > e-php.$1.tar
-    ls -sh e-php.$1.tar
-    git tag -a $1 -m "version $1"
-else
-     echo -e "\033[31m Отсутствует номер версии \033[0m"
-fi
+PACKAGE_VERSION=$(cat Dockerfile \
+  | grep LABEL \
+  | grep version \
+  | awk -F= '{print $2}' \
+  | sed 's/[",]//g' \
+  | tr -d '[[:space:]]'
+ )
 
+docker build -t klimby/e-php:$PACKAGE_VERSION -t klimby/e-php:latest .
+
+docker push klimby/e-php:$PACKAGE_VERSION
+
+docker push klimby/e-php:latest
+
+# rm *.tar
+
+# docker save klimby/e-php:$PACKAGE_VERSION klimby/e-php:latest > e-php.$PACKAGE_VERSION.tar
+# docker save klimby/e-php:$PACKAGE_VERSION klimby/e-php:latest > e-php.tar
+
+git tag -a $PACKAGE_VERSION -m "version $PACKAGE_VERSION"
+
+ls -sh e-php.$PACKAGE_VERSION.tar
 
 
