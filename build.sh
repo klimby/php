@@ -22,6 +22,6 @@ docker push klimby/e-php:latest
 
 git tag -a $PACKAGE_VERSION -m "version $PACKAGE_VERSION"
 
-ls -sh e-php.$PACKAGE_VERSION.tar
+# ls -sh e-php.$PACKAGE_VERSION.tar
 
 

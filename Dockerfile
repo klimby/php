@@ -1,9 +1,10 @@
 FROM php:7.1.20-fpm-alpine3.7
 LABEL e-php.description="PHP-FPM v7.1.20-fpm-alpine3.7"
-LABEL e-php.version="0.1.0"
+LABEL e-php.version="0.1.3"
 
 # Install dependencies
 RUN apk --no-cache --update add \
+    bash \
     nano \
     libmcrypt \
     libmcrypt-dev \
@@ -11,8 +12,6 @@ RUN apk --no-cache --update add \
     postgresql-dev \
     zlib-dev \
     bzip2-dev \
-#    && docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
-#    && docker-php-ext-install -j$(nproc) pdo_pgsql pgsql \
     && docker-php-ext-install -j$(nproc) pdo_pgsql \
     && docker-php-ext-install -j$(nproc) mcrypt zip bz2
 
@@ -40,7 +39,9 @@ COPY www.conf /usr/local/etc/php-fpm.d/www.conf
 
 # USER www-data
 
-WORKDIR /var/www
+VOLUME /var/www/dataserver
+
+WORKDIR /var/www/dataserver
 
 CMD ["php-fpm"]
 
