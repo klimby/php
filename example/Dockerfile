@@ -1,12 +1,12 @@
-FROM php:7.2.11-fpm-alpine3.8
-LABEL e-php.description="PHP-FPM v7.2.11-fpm-alpine3.8"
-LABEL e-php.version="0.2.0"
+FROM php:7.2.10-fpm-alpine
+LABEL Description="Application container"
 
-ENV PHP_REDIS_VERSION 4.1.1
+ENV PS1='\[\033[1;32m\]🐳  \[\033[1;36m\][\u@\h] \[\033[1;34m\]\w\[\033[0;35m\] \[\033[1;36m\]# \[\033[0m\]'
+
 ENV COMPOSER_VERSION 1.7.2
+## Looked here: <https://github.com/prooph/docker-files/blob/master/php/7.2-cli>
+ENV PHP_REDIS_VERSION 4.1.1
 ENV PHP_XDEBUG_VERSION 2.6.0
-ENV IMAGICK_TAG 3.4.2
-
 
 # persistent / runtime deps
 ENV PHPIZE_DEPS \
@@ -42,8 +42,6 @@ RUN apk add --no-cache --virtual .persistent-deps \
     bzip2-dev \
     # for intl extension
     libintl gettext-dev libxslt \
-    # imagemagick
-    imagemagick-dev imagemagick \
     # etc
     bash nano
 
@@ -98,15 +96,6 @@ opcache.enable_cli=1\n\
 opcache.enable=1\n" > /usr/local/etc/php/conf.d/opcache.ini \
     # For phpunit coverage
     && pecl install xdebug-${PHP_XDEBUG_VERSION} \
-    && git clone -o ${IMAGICK_TAG} --depth 1 https://github.com/mkoppanen/imagick.git /tmp/imagick \
-        && cd /tmp/imagick \
-
-        && phpize \
-        && ./configure \
-        && make \
-        && make install \
-
-        && echo "extension=imagick.so" > /usr/local/etc/php/conf.d/ext-imagick.ini \
     && git clone --branch ${PHP_REDIS_VERSION} https://github.com/phpredis/phpredis /tmp/phpredis \
         && cd /tmp/phpredis \
         && phpize  \
@@ -116,14 +105,24 @@ opcache.enable=1\n" > /usr/local/etc/php/conf.d/opcache.ini \
         && make test \
         && echo 'extension=redis.so' > /usr/local/etc/php/conf.d/redis.ini \
     && apk del .build-deps \
-    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
+    && rm -rf /tmp/* \
+    && rm -rf /app \
+    && mkdir /app \
+    && rm -rf /scripts \
+    && mkdir /scripts \
+    && mkdir -p /scripts/aliases \
+    && rm -rf /home/user \
+    && mkdir /home/user \
+    && chmod 777 /home/user \
+    && rm -f /docker-entrypoint.sh \
     && rm -f /usr/local/etc/php-fpm.d/*
 
-COPY php.ini /usr/local/etc/php/php.ini
-COPY php-fpm.conf /usr/local/etc/php-fpm.conf
+COPY ./etc/php/php.ini /usr/local/etc/php/php.ini
+COPY ./etc/php/php-fpm.conf /usr/local/etc/php-fpm.conf
 
 ENV COMPOSER_ALLOW_SUPERUSER 1
 ENV COMPOSER_HOME /tmp
+ENV PATH /scripts:/scripts/aliases:$PATH
 
 RUN set -xe \
     && mkdir -p "$COMPOSER_HOME" \
@@ -141,7 +140,11 @@ RUN set -xe \
     && php-fpm -v \
     && php -m
 
+COPY ./keep-alive.sh /scripts/keep-alive.sh
+COPY ./scheduler.sh /scripts/scheduler.sh
+COPY ./fpm-entrypoint.sh /fpm-entrypoint.sh
+COPY ./aliases/* /scripts/aliases/
 
-WORKDIR /var/www/dataserver
-
-CMD ["php-fpm"]
+WORKDIR /app
+ENTRYPOINT []
+CMD []
