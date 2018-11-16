@@ -1,6 +1,6 @@
 FROM php:7.2.11-fpm-alpine3.8
 LABEL e-php.description="PHP-FPM v7.2.11-fpm-alpine3.8"
-LABEL e-php.version="0.2.0"
+LABEL e-php.version="0.2.2"
 
 ENV PHP_REDIS_VERSION 4.1.1
 ENV COMPOSER_VERSION 1.7.2
@@ -18,7 +18,7 @@ ENV PHPIZE_DEPS \
     libc-dev \
     pcre-dev \
     make \
-    git \
+ #   git \
     pkgconf \
     re2c \
     # for GD
@@ -45,11 +45,14 @@ RUN apk add --no-cache --virtual .persistent-deps \
     # imagemagick
     imagemagick-dev imagemagick \
     # etc
-    bash nano
+  #  bash \
+    nano
+# gmp, bcmath
 
 RUN set -xe \
     # workaround for rabbitmq linking issue
     && ln -s /usr/lib /usr/local/lib64 \
+    && apk add --no-cache bash git openssh \
     && apk add --no-cache --virtual .build-deps \
         $PHPIZE_DEPS \
     && docker-php-ext-configure gd \
