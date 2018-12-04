@@ -1,6 +1,6 @@
 FROM php:7.2.11-fpm-alpine3.8
 LABEL e-php.description="PHP-FPM v7.2.11-fpm-alpine3.8"
-LABEL e-php.version="0.2.2"
+LABEL e-php.version="0.2.3"
 
 ENV PHP_REDIS_VERSION 4.1.1
 ENV COMPOSER_VERSION 1.7.2
@@ -46,7 +46,11 @@ RUN apk add --no-cache --virtual .persistent-deps \
     imagemagick-dev imagemagick \
     # etc
   #  bash \
-    nano
+    nano \
+    php7-gmp \
+    libmcrypt-dev \
+    libltdl
+
 # gmp, bcmath
 
 RUN set -xe \
@@ -69,6 +73,10 @@ RUN set -xe \
     && docker-php-ext-configure mbstring --enable-mbstring \
     && docker-php-ext-configure soap --enable-soap \
     && docker-php-ext-configure opcache --enable-opcache \
+
+    && docker-php-ext-configure mcrypt \
+    && docker-php-ext-install mcrypt \
+
     && docker-php-ext-install -j$(nproc) \
         gd \
         bcmath \
