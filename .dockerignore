@@ -6,3 +6,4 @@
 build.sh
 enter.sh
 *.yml
+/node_modules/
