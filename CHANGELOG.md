@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.4.0"></a>
+# [0.4.0](https://github.com/klimby/e-php/compare/v0.3.0...v0.4.0) (2018-12-06)
+
+
+### Bug Fixes
+
+* **release:** fix aliases ([d9083d1](https://github.com/klimby/e-php/commit/d9083d1))
+
+
+### Features
+
+* **release:** rebuild ([a2dce9f](https://github.com/klimby/e-php/commit/a2dce9f))
+
+
+
 <a name="0.3.0"></a>
 # 0.3.0 (2018-12-05)
 
