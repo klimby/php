@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+APP_DIR="${APP_DIR:-/app}";
+
+composer --working-dir="$APP_DIR" "$@"

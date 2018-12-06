@@ -9,7 +9,7 @@ PACKAGE_VERSION=$(cat Dockerfile \
   | tr -d '[[:space:]]'
  )
 
-docker build -t klimby/e-php-test:$PACKAGE_VERSION  .
+docker build -t klimby/e-php-test:$PACKAGE_VERSION .
 
 
 

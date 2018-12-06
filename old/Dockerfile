@@ -1,6 +1,6 @@
 FROM php:7.2.11-fpm-alpine3.8
 LABEL e-php.description="PHP-FPM v7.2.11-fpm-alpine3.8"
-LABEL e-php.version="v0.3.1"
+LABEL e-php.version="0.2.3"
 
 ENV PHP_REDIS_VERSION 4.1.1
 ENV COMPOSER_VERSION 1.7.2
@@ -51,6 +51,8 @@ RUN apk add --no-cache --virtual .persistent-deps \
     libmcrypt-dev \
     libltdl
 
+# gmp, bcmath
+
 RUN set -xe \
     # workaround for rabbitmq linking issue
     && ln -s /usr/lib /usr/local/lib64 \
@@ -71,6 +73,10 @@ RUN set -xe \
     && docker-php-ext-configure mbstring --enable-mbstring \
     && docker-php-ext-configure soap --enable-soap \
     && docker-php-ext-configure opcache --enable-opcache \
+
+    && docker-php-ext-configure mcrypt \
+    && docker-php-ext-install mcrypt \
+
     && docker-php-ext-install -j$(nproc) \
         gd \
         bcmath \
@@ -102,7 +108,6 @@ opcache.fast_shutdown=1\n\
 opcache.enable_cli=1\n\
 opcache.enable=1\n" > /usr/local/etc/php/conf.d/opcache.ini \
     # For phpunit coverage
-    && pecl channel-update pecl.php.net \
     && pecl install xdebug-${PHP_XDEBUG_VERSION} \
     && git clone -o ${IMAGICK_TAG} --depth 1 https://github.com/mkoppanen/imagick.git /tmp/imagick \
         && cd /tmp/imagick \
@@ -123,21 +128,17 @@ opcache.enable=1\n" > /usr/local/etc/php/conf.d/opcache.ini \
         && echo 'extension=redis.so' > /usr/local/etc/php/conf.d/redis.ini \
     && apk del .build-deps \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
-    && rm -f /usr/local/etc/php-fpm.d/* \
-    && rm -rf /scripts \
-    && mkdir /scripts \
-    && mkdir -p /scripts/aliases
+    && rm -f /usr/local/etc/php-fpm.d/*
 
-COPY php.ini /usr/local/etc/php/php.ini
-COPY php-fpm.conf /usr/local/etc/php-fpm.conf
+COPY old/php.ini /usr/local/etc/php/php.ini
+COPY old/php-fpm.conf /usr/local/etc/php-fpm.conf
 
 ENV COMPOSER_ALLOW_SUPERUSER 1
 ENV COMPOSER_HOME /tmp
-ENV PATH /scripts:/scripts/aliases:$PATH
 
-# install composer
 RUN set -xe \
     && mkdir -p "$COMPOSER_HOME" \
+    # install composer
     && php -r "copy('https://getcomposer.org/installer', '/tmp/composer-setup.php');" \
     && php -r "if(hash_file('SHA384','/tmp/composer-setup.php')==='93b54496392c062774670ac18b134c3b3a95e5a5e5c8f1a9f'.\
     '115f203b75bf9a129d5daa8ba6a13e2cc8a1da0806388a8'){echo 'Verified';}else{unlink('/tmp/composer-setup.php');}" \
@@ -151,12 +152,7 @@ RUN set -xe \
     && php-fpm -v \
     && php -m
 
-COPY ./scripts/keep-alive.sh /scripts/keep-alive.sh
-COPY ./scripts/scheduler.sh /scripts/scheduler.sh
-COPY ./scripts/docker-php-entrypoint /usr/local/bin/
-COPY ./aliases/* /scripts/aliases/
 
 WORKDIR /var/www/dataserver
 
-ENTRYPOINT ["docker-php-entrypoint"]
 CMD ["php-fpm"]
