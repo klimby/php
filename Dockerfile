@@ -17,7 +17,7 @@ ENV PHPIZE_DEPS \
     gcc \
     libc-dev \
     pcre-dev \
-    make \
+ #   make \
  #   git \
     pkgconf \
     re2c \
@@ -51,10 +51,11 @@ RUN apk add --no-cache --virtual .persistent-deps \
     libmcrypt-dev \
     libltdl
 
+
 RUN set -xe \
     # workaround for rabbitmq linking issue
     && ln -s /usr/lib /usr/local/lib64 \
-    && apk add --no-cache bash git openssh \
+    && apk add --no-cache bash git make openssh \
     && apk add --no-cache --virtual .build-deps \
         $PHPIZE_DEPS \
     && docker-php-ext-configure gd \
