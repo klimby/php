@@ -7,6 +7,8 @@ ENV COMPOSER_VERSION 1.7.2
 ENV PHP_XDEBUG_VERSION 2.6.0
 ENV IMAGICK_TAG 3.4.2
 
+ENV BASE_PATH /var/www/dataserver
+
 
 # persistent / runtime deps
 ENV PHPIZE_DEPS \
@@ -154,10 +156,11 @@ RUN set -xe \
 
 COPY ./scripts/keep-alive.sh /scripts/keep-alive.sh
 COPY ./scripts/scheduler.sh /scripts/scheduler.sh
+COPY ./scripts/perm.sh /scripts/perm.sh
 COPY ./scripts/docker-php-entrypoint /usr/local/bin/
 COPY ./aliases/* /scripts/aliases/
 
-WORKDIR /var/www/dataserver
+WORKDIR $BASE_PATH
 
 ENTRYPOINT ["docker-php-entrypoint"]
 CMD ["php-fpm"]
