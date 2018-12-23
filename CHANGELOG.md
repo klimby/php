@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.4.4"></a>
+## [0.4.4](https://github.com/klimby/e-php/compare/v0.4.3...v0.4.4) (2018-12-23)
+
+
+### Bug Fixes
+
+* **release:** add temp and templates dir too storage permission script ([d076535](https://github.com/klimby/e-php/commit/d076535))
+
+
+
 <a name="0.4.3"></a>
 ## [0.4.3](https://github.com/klimby/e-php/compare/v0.4.2...v0.4.3) (2018-12-11)
 
