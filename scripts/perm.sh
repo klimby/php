@@ -10,6 +10,10 @@ echo "Find storage and change permission";
     mkdir -p ${BASE_PATH}/storage/logs;
  fi
 
+ if ! [ -d "${BASE_PATH}/storage/temp" ]; then
+    mkdir -p ${BASE_PATH}/storage/temp;
+ fi
+
  if ! [ -d "${BASE_PATH}/storage/framework" ]; then
     mkdir -p ${BASE_PATH}/storage/framework;
 
@@ -38,6 +42,10 @@ echo "Find storage and change permission";
 
         if ! [ -d "${BASE_PATH}/storage/app/public/photos" ]; then
         mkdir -p ${BASE_PATH}/storage/app/public/photos;
+        fi
+
+        if ! [ -d "${BASE_PATH}/storage/app/public/templates" ]; then
+        mkdir -p ${BASE_PATH}/storage/app/public/templates;
         fi
 
     fi
