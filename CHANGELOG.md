@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.4.5"></a>
+## [0.4.5](https://github.com/klimby/e-php/compare/v0.4.4...v0.4.5) (2018-12-24)
+
+
+### Bug Fixes
+
+* **release:** add zip lib ([6a3b244](https://github.com/klimby/e-php/commit/6a3b244))
+
+
+
 <a name="0.4.4"></a>
 ## [0.4.4](https://github.com/klimby/e-php/compare/v0.4.3...v0.4.4) (2018-12-23)
 

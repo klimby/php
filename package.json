@@ -1,6 +1,6 @@
 {
   "name": "e-php",
-  "version": "0.4.4",
+  "version": "0.4.5",
   "description": "PHP-FPM v7.2.11-fpm-alpine3.8",
   "main": "index.js",
   "scripts": {
