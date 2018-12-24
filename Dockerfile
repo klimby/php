@@ -51,7 +51,9 @@ RUN apk add --no-cache --virtual .persistent-deps \
     nano \
     php7-gmp \
     libmcrypt-dev \
-    libltdl
+    libltdl\
+    libzip-dev \
+    zip
 
 
 RUN set -xe \
@@ -74,6 +76,8 @@ RUN set -xe \
     && docker-php-ext-configure mbstring --enable-mbstring \
     && docker-php-ext-configure soap --enable-soap \
     && docker-php-ext-configure opcache --enable-opcache \
+    && docker-php-ext-configure zip --with-libzip \
+    && docker-php-ext-install zip \
     && docker-php-ext-install -j$(nproc) \
         gd \
         bcmath \
