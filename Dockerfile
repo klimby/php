@@ -77,7 +77,6 @@ RUN set -xe \
     && docker-php-ext-configure soap --enable-soap \
     && docker-php-ext-configure opcache --enable-opcache \
     && docker-php-ext-configure zip --with-libzip \
-    && docker-php-ext-install zip \
     && docker-php-ext-install -j$(nproc) \
         gd \
         bcmath \
@@ -100,6 +99,7 @@ RUN set -xe \
         sysvshm \
         wddx \
         xsl \
+        zip \
         opcache \
     && echo -e "opcache.memory_consumption=128\n\
 opcache.interned_strings_buffer=8\n\
