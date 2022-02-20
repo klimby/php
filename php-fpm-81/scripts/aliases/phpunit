@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+BASE_PATH="${BASE_PATH:-/var/www}";
+
+php "$BASE_PATH/vendor/bin/phpunit" "$@"

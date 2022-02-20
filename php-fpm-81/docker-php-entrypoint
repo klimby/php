@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+#!/bin/sh
+set -e
+
+MODE="${MODE:-production}";
+LOCALE="${LOCALE:-ru}";
+
+if [[ ${MODE} = "production" ]]
+    then
+        # copy production ini file
+        cp /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini;
+        # remove xdebug from system
+        rm -f /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini;
+        rm -f /usr/local/etc/php/conf.d/20-xdebug.ini;
+    else
+        # copy dev ini file
+        cp /usr/local/etc/php/php.ini-development /usr/local/etc/php/php.ini;
+        # remove opcache
+        rm -f /usr/local/etc/php/conf.d/docker-php-ext-opcache.ini;
+fi
+
+#
+# Set locale if English
+#
+if [[ ${LOCALE} = "en" ]]; then
+        export LANG=en_US.UTF-8;
+        export LANGUAGE=en_US:en;
+        export LC_ALL=en_US.UTF-8;
+fi
+
+config.sh
+
+# first arg is `-f` or `--some-option`
+if [ "${1#-}" != "$1" ]; then
+  set -- php-fpm "$@"
+fi
+
+exec "$@"
+

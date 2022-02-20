@@ -1,0 +1,22 @@
+version: '3.7'
+
+networks:
+  php-fpm-test:
+    driver: bridge
+
+services:
+
+  &php-fpm php-fpm:
+    image: klimby/php-fpm:latest
+    container_name: php-fpm-81-test
+    hostname: *php-fpm
+    environment:
+      #- MODE=production
+     # - MODE=develop
+      - ROLE=server
+    ports: ["9000:9000"]
+    networks:
+      - php-fpm-test
+
+
+

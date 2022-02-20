@@ -1,15 +1,20 @@
 {
   "name": "e-php",
   "version": "0.4.6",
-  "description": "PHP-FPM v7.2.11-fpm-alpine3.8",
+  "description": "PHP-FPM v8.1 for Laravel",
   "main": "index.js",
   "scripts": {
-    "release": "standard-version",
-    "patch": "standard-version -- --release-as patch"
+    "======= STANDARD VERSION SECTION =======": "",
+    "major": "standard-version --release-as major",
+    "major-dry": "standard-version --release-as major --dry-run",
+    "minor": "standard-version --release-as minor",
+    "minor-dry": "standard-version --release-as minor --dry-run",
+    "patch": "standard-version --release-as patch",
+    "patch-dry": "standard-version --release-as patch --dry-run"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/klimby/e-php.git"
+    "url": "git+https://github.com/klimby/php.git"
   },
   "keywords": [
     "docker",
@@ -18,10 +23,10 @@
   "author": "Alexander Klimov",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/klimby/e-php/issues"
+    "url": "https://github.com/klimby/php/issues"
   },
-  "homepage": "https://github.com/klimby/e-php#readme",
+  "homepage": "https://github.com/klimby/php#readme",
   "devDependencies": {
-    "standard-version": "^4.4.0"
+    "standard-version": "^9.3.2"
   }
 }

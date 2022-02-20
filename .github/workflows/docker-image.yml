@@ -1,0 +1,25 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Docker login
+      env:
+        DOCKER_USER: ${{secrets.DOCKER_USER}}
+        DOCKER_TOKEN: ${{secrets.DOCKER_TOKEN}}
+      run: docker login -u $DOCKER_USER --password $DOCKER_TOKEN
+    - name: Build the Docker image
+      run: docker build --file ./php-fpm-81/Dockerfile --tag ${{secrets.DOCKER_USER}}/php-fpm:8.1 --tag ${{secrets.DOCKER_USER}}/php-fpm:latest ./php-fpm-81
+    - name: Docker Push
+      run: | 
+          docker push ${{secrets.DOCKER_USER}}/php-fpm:8.1
+          docker push ${{secrets.DOCKER_USER}}/php-fpm:latest
