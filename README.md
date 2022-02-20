@@ -11,12 +11,14 @@
 
 # php
 
-**FROM php:8.1.1-fpm-buster**
+**FROM php:8.1.1-fpm-buster** for Laravel
 
 PHP 8.1.1 (cli) (built: Dec 21 2021 20:18:04) (NTS)
-Zend Engine v4.0.1, Copyright (c) Zend Technologies
+
 Zend Engine v4.1.1, Copyright (c) Zend Technologies
+
 with Xdebug v3.1.2, Copyright (c) 2002-2021, by Derick Rethans  **(MODE=develop)**
+
 with Zend OPcache v8.1.1, Copyright (c), by Zend Technologies **(MODE=production)**
 
 ```
