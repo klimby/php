@@ -1,6 +1,6 @@
 {
   "name": "e-php",
-  "version": "0.4.6",
+  "version": "1.0.0",
   "description": "PHP-FPM v8.1 for Laravel",
   "main": "index.js",
   "scripts": {

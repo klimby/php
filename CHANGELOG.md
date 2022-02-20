@@ -1,6 +1,18 @@
-# Change Log
+# Changelog
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
+## [1.0.0](https://github.com/klimby/php/compare/v0.4.6...v1.0.0) (2022-02-20)
+
+
+### Features
+
+* php 8.1 ([f308b2b](https://github.com/klimby/php/commit/f308b2bdc08084da30687637ad906f5e1e28927a))
+
+
+### Bug Fixes
+
+* **release:** fix GD ([25680f5](https://github.com/klimby/php/commit/25680f578d3121075e8a8c940404cdc5abd2ef3f))
 
 <a name="0.4.6"></a>
 ## [0.4.6](https://github.com/klimby/e-php/compare/v0.4.5...v0.4.6) (2018-12-27)

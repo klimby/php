@@ -1,4 +1,4 @@
-![Version v0.4.3](https://img.shields.io/badge/version-v0.4.3-blue.svg?style=plastic "Version v0.4.3")
+![Version v1.0.0](https://img.shields.io/badge/version-v1.0.0-blue.svg?style=plastic "Version v1.0.0")
 ![PHP v8.1](https://img.shields.io/badge/PHP-v8.1-blue.svg?style=plastic "PHP v8.1")
 
 
